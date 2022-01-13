@@ -1,11 +1,9 @@
-FROM python:3.8-slim-buster
+FROM ubuntu:16.04
 
-WORKDIR /app
+RUN apt-get update  && apt-get install -y python python-pip
 
-COPY . /app
+RUN pip install flask
 
-RUN pip install -r requirements.txt
+copy app.py /opt/
 
-EXPOSE 5000
-
-CMD ["python3","app.py"]
+ENRTYPOINT FLASK_APP=/opt/app.py flask run  --host=0.0.0.0 --port=8080
